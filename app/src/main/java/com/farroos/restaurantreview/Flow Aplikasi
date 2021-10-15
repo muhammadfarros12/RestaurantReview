@@ -1,0 +1,20 @@
+alur dalam pembuatan aplikasi RestaurantReview
+1. Buat untuk activity awal (MainActivity)
+2. Siapkan keseluruhan Response yang akan dipakai
+    file: RestaurantResponse
+3. Siapkan untuk get API (Retrofit2)
+    file: ApiConfig
+          ApiService
+4. Karena didalam aplikasi kita ada RecyclerView, maka
+   kita akan buat untuk item dan adapternya
+    file: item_review(layout)
+          ReviewAdapter(Adapter)
+5. Bagian Utama: Proses mengambil data dengan Retrofit dan menampilkannya
+   mengunakan RecyclerView di MainActivity
+    file: MainActivity(Penambahan Code)
+6. finishing: kita akan mengirimkan data review menggunakan POST pada retrofit
+    kita akan menambahkannya pada
+    file: RestaurantResponse(penambahan code untuk responsenya)
+          ApiService (untuk mengirim data)
+          MainActivity(fungsi untuk mengirim review ketika tombol kirim diklik)
+
