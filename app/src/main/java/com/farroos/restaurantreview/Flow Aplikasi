@@ -18,3 +18,21 @@ alur dalam pembuatan aplikasi RestaurantReview
           ApiService (untuk mengirim data)
           MainActivity(fungsi untuk mengirim review ketika tombol kirim diklik)
 
+Bagian 2: Latihan Live Data dengan API tujuan
+catatan sebelumnya:
+Seperti yang Anda pelajari di awal modul terkait lifecycle, ketika aplikasi dirotasi,
+aplikasi akan memanggil onCreate kembali sehingga loading muncul karena request dieksekusi lagi.
+Untuk mengatasi hal ini, kita akan menggunakan ViewModel dan LiveData untuk menjaga data
+ketika terjadi configuration change.
+
+1. membuat class baru dengan ViewModel, Lalu buat beberapa variabel untuk menampung data restoran,
+   review, dan status loading. Buat juga konstanta TAG dan RESTAURANT_ID
+    file: MainViewModel
+2. Setelah itu, pindahkan fungsi findRestaurant yang ada di MainActivity ke MainViewModel
+   dan panggil ketika ViewModel diinisialisasi, ubah pula fungsi showLoading, setRestaurantData,
+   dan setReviewData menjadi setValue ke MutableLiveData
+    file: MainViewModel
+3. Kemudian inisialisasi ViewModel dan observe setiap data dan panggil fungsi yang dibutuhkan
+    file: MainActivity
+
+

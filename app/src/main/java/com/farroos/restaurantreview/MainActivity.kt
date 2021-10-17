@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -18,34 +19,49 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    companion object{
-        private const val TAG = "MainActivity"
-        private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
-    }
+//    companion object{
+//        private const val TAG = "MainActivity"
+//        private const val RESTAURANT_ID = "uewq1zg2zlskfw1e867"
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         supportActionBar?.hide()
+
+        // setelah class viewModel
+        val mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+        mainViewModel.restaurant.observe(this, {
+            setRestaurantData(it)
+        })
 
         val layoutManager = LinearLayoutManager(this)
         binding.rvReview.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvReview.addItemDecoration(itemDecoration)
 
-        findRestaurant()
+        //findRestaurant()
+
+        mainViewModel.listReview.observe(this, {consumerReviews ->
+            setReviewData(consumerReviews)
+        })
+
+        mainViewModel.isLoading.observe(this, {
+            showLoading(it)
+        })
 
         // method post untuk review
         binding.btnSend.setOnClickListener { view ->
+            mainViewModel.postreview(binding.edReview.text.toString())
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
     }
-
-    private fun findRestaurant() {
+    /*private fun findRestaurant() {
         showLoading(true)
         val client = ApiConfig.getApiService().getRestaurant(RESTAURANT_ID)
         client.enqueue(object : Callback<RestaurantResponse> {
@@ -71,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-    }
+    }*/
 
     private fun setRestaurantData(restaurant: Restaurant) {
         binding.tvTitle.text = restaurant.name
@@ -104,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun postReview(review: String){
+    /*private fun postReview(review: String){
         showLoading(true)
         val client = ApiConfig.getApiService().postReview(RESTAURANT_ID, "Dicoding", review)
         client.enqueue(object : Callback<PostReviewResponse>{
@@ -127,5 +143,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-    }
+    }*/
 }
