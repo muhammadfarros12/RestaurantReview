@@ -35,4 +35,29 @@ ketika terjadi configuration change.
 3. Kemudian inisialisasi ViewModel dan observe setiap data dan panggil fungsi yang dibutuhkan
     file: MainActivity
 
+Bagian 3: LiveData dengan Single Event Tujuan
+catatan sebelumnya:
+Pada materi sebelumnya Anda sudah mengetahui bagaimana penggunaan LiveData untuk selalu meng-observe data terbaru.
+Namun, bagaimana jika Anda hanya ingin menampilkan data sekali saja?
+Contohnya, seperti menampilkan Snackbar, Toast, maupun navigasi ke halaman lain.
+Supaya lebih mudah, kita akan menyebut beberapa aksi itu sebagai single event.
+
+dasarnya LiveData akan melihat kembali data yang kita masukkan atau kita inputkan ketika terjadi configuration change.
+yang jadi masalah ketika single event(sekali kejadian seperti snackbar dkk) akan selalu tampil saat configuration change
+untuk cara mengatasinya kita akan menggunakan event wrapper
+
+1. kita mulai dengan membuat variable untuk menyimpan text yang akan ditampilkan di Snackbar pada MainViewModel
+   dan kita isi variable tersebut dengan pesan yang ada di API
+    file: MainViewModel
+2. kemudian kita lakukan Observe(ketika ada configuration change tetap sama) pada MainActivity
+   (sampai sini ketika ada configuration change tetap ke observe)
+    file: MainActivity
+3. Buat kelas baru untuk membuat event wrapper
+    file: Event
+4. dan menambahkan beberapa code di SnackBar
+    file: MainViewModel
+5. terakhir kita akan menambahkan beberapa code dibagian snackbar
+    file: MainActivty
+
+
 
